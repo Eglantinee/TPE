@@ -192,3 +192,5 @@ if Fp < F_kr:
     print("Regression equation is adequate to original")
 else:
     print("Regression equation is inadequate to original")
+
+#sms
