@@ -149,6 +149,11 @@ s2_b = sum([s_y1, s_y2, s_y3, s_y4]) / N
 s2_beta = s2_b / (N * m)
 s_beta = np.sqrt(s2_beta)
 
+# Student criteria: we want to find which coefficients are valuable:
+#   to do it we compare t[i] with t_kr
+#   but t[i] = b_[i]/ s_beta
+#   so we find s2_b then s2_beta and then s_beta;  find b_[i] and then t[i]    <= using formulas
+
 b_0 = sum([globals()['y' + str(i + 1) + '_abs'] * matrix[i][0] for i in range(len(matrix))]) / N
 b_1 = sum([globals()['y' + str(i + 1) + '_abs'] * matrix[i][1] for i in range(len(matrix))]) / N
 b_2 = sum([globals()['y' + str(i + 1) + '_abs'] * matrix[i][2] for i in range(len(matrix))]) / N
