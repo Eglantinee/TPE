@@ -1,0 +1,24 @@
+b = kkk
+    
+    
+    b_0 = sum(y_abs) / N
+    # print([i for i in range(N)])
+    # print(y_[7])
+    b_1 = sum([norm_matrix[i][1] * y_abs[i] for i in range(N)]) / N
+    b_2 = sum([norm_matrix[i][2] * y_abs[i] for i in range(N)]) / N
+    b_3 = sum([norm_matrix[i][3] * y_abs[i] for i in range(N)]) / N
+    b_12 = sum([norm_matrix[i][1] * norm_matrix[i][2] * y_abs[i] for i in range(N)]) / N
+    b_13 = sum([norm_matrix[i][1] * norm_matrix[i][3] * y_abs[i] for i in range(N)]) / N
+    b_23 = sum([norm_matrix[i][2] * norm_matrix[i][3] * y_abs[i] for i in range(N)]) / N
+    b_123 = sum([norm_matrix[i][1] * norm_matrix[i][2]* norm_matrix[i][3] * y_abs[i] for i in range(N)]) / N
+    
+    b = (b_0, b_1, b_2, b_3, b_12, b_13, b_23, b_123)
+    def check1():
+        # Confirm that y[j]_abs = y[j]
+        res = dict()
+        for i in range(N):
+            res.update(
+                {y_abs[i]: b[0] + b[1] * norm_matrix[i][1] + b[2] * norm_matrix[i][2] +
+                                                        b[3]
+                                                        * norm_matrix[i][3] + b[4] * norm_matrix[i][4] + b[5] * norm_matrix[i][5]+ b[6] * norm_matrix[i][6] + b[7] * norm_matrix[i][7]})
+        return res
