@@ -71,13 +71,14 @@ def gen_matrix(mx, num, mins, maxes):
 
 
 def second_check(s_y, y_abs, matrix2, f1, f2, b, check1, norm_matrix):
-    # We use second_check function just to make Fisher and Student criteria
-    # after making experiment on equation with interaction effect
-    # the difference between second_check and check_for_adequate  is that here
-    # N = 8 (not 4) and if regression is inadequate we start from the beginning  call start(4)
-    # and we have more complicated regression y = [...]
-    # but the main idea is the same as in check_for_adequate function
-
+    # We use second_check function just to make Fisher and Student criteries
+    # after we make experiment on equation with interaction effect
+    # the difference between second_check and check_for_adequate  is that here we have
+    # N = 8 (but not 4) and if regression is inadequate we start from the beginning  call start(4)
+    # and we have more complicated regression y = [...] and so on
+    # but the main idea of second_check is the same as in check_for_adequate function
+    #
+    
     N = 8
     m=3
     s2_b = sum(s_y) / N
