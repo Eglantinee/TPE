@@ -1,8 +1,3 @@
-# pylint: disable=C0103
-# pylint: disable=C0116
-# pylint: disable=C0114
-# pylint: disable=E0611
-# pylint: disable=E0401
 import sys
 from math import sqrt
 from copy import deepcopy
@@ -13,8 +8,6 @@ from scipy import linalg
 from scipy.stats import f
 from scipy.stats import t as par_t
 
-
-
 x1_min = -40
 x1_max = 20
 x2_min = 30
@@ -22,9 +15,14 @@ x2_max = 80
 x3_min = -40
 x3_max = -25
 
+
 def make_y(x1, x2, x3):
-    return (1.7+2.8*x1+9.7*x2+2.9*x3+4.9*x1*x1+0.2*x2*x2+0.9*x3*x3+3.2*x1*x2
-            +1.0*x1*x3+6.8*x2*x3+2.8*x1*x2*x3) / 10 + randint(0, 10) - 5
+    return (1.7 + 2.8 * x1 + 9.7 * x2 +
+            2.9 * x3 + 4.9 * x1 * x1 +
+            0.2 * x2 * x2 + 0.9 * x3 * x3 + 3.2 * x1 * x2 +
+            1.0 * x1 * x3 + 6.8 * x2 * x3 +
+            2.8 * x1 * x2 * x3) / 10 + randint(0, 10) - 5
+
 
 y_min = make_y(x1_min, x2_min, x3_min)
 y_max = make_y(x1_max, x2_max, x3_max)
@@ -47,6 +45,7 @@ initial_matrix = [[-1, -1, -1],
                   [0, 0, -1.73],
                   [0, 0, 1.73]]
 
+
 def fisher_criteria(matrix, m, y_abs, s2_beta, d, b, f3, num_x, N, step):
     y = [b[0] + sum([b[j] * matrix[i][j - 1] for j in range(1, num_x)]) for i in range(N)]
     if N - d == 0:
@@ -58,6 +57,7 @@ def fisher_criteria(matrix, m, y_abs, s2_beta, d, b, f3, num_x, N, step):
     f4 = N - d
     F_kr = f.ppf(dfn=f4, dfd=f3, q=0.95)
     return Fp, F_kr
+
 
 def student_criteria(matrix, num_x, y_abs, s_y, b, f3, m):
     s2_b = sum(s_y) / N
@@ -79,6 +79,7 @@ def student_criteria(matrix, num_x, y_abs, s_y, b, f3, m):
     b = [b[i] * t[i] for i in range(len(t))]
     return t, s2_beta, d
 
+
 def beta(lst, mx, n, nn):
     ac = 0
     res = []
@@ -98,7 +99,6 @@ def mk_solve(mx1, res_mx, num_x):
     for i in tmp:
         vector0.append(i)
     k = 0
-
 
     def mk_vector():
         nonlocal k
@@ -141,9 +141,6 @@ def res_vector(matrix, y_abs, num_x):
     return res
 
 
-
-
-
 def abs_maker(mx, row, start, stop, step, val):
     return sum([mx[row][j] for j in range(start, stop, step)]) / val
 
@@ -156,7 +153,8 @@ def my_check(mx, b, y_abs, num_x):
 
 
 def s_y_maker(matrix, y_abs, row, m):
-    return [sum((matrix[i][j] - y_abs[i])**2 for j in range(row - 1, row -m -1, -1)) for i in range(N)]
+    return [sum((matrix[i][j] - y_abs[i]) ** 2 for j in range(row - 1, row - m - 1, -1)) for i in range(N)]
+
 
 def add_y_vals(func):
     def inner(*args):
@@ -241,10 +239,9 @@ def pre_run(m):
     norm_matrix = gen_matrix(deepcopy(initial_matrix), m)
     return matrix, norm_matrix
 
+
 def equations(matrix, norm_matrix, val, num_x, step):
     m = val
-
-
 
     # num_x = 4  # number of columns with x values x1 -> x3^2 + 1 for zero column
     solve_mx = [[] for i in range(num_x)]
@@ -278,7 +275,6 @@ def equations(matrix, norm_matrix, val, num_x, step):
     t, s2_beta, d = student_criteria(matrix, num_x, y_abs, s_y, b, f3, m)
     Fp, F_kr = fisher_criteria(matrix, m, y_abs, s2_beta, d, b, f3, num_x, N, step)
 
-
     if Fp < F_kr:
         tb(matrix)
         print("\nCoefficients of regression are: \n", b)
@@ -308,5 +304,7 @@ def equations(matrix, norm_matrix, val, num_x, step):
             num_x = 4
             matrix, norm_matrix = pre_run(3)
             equations(matrix, norm_matrix, 3, num_x, step)
+
+
 matrix, norm_matrix = pre_run(3)
 equations(matrix, norm_matrix, 3, 4, 0)
