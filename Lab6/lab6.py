@@ -241,6 +241,12 @@ def pre_run(m):
 
 
 def equations(matrix, norm_matrix, val, num_x, step):
+
+    # We have one function for all equations (linear, with cooperation ...)
+    # and we should know what equation will be next if previous return inadequate regression
+    # and STEP is variable which increases all the time (step < 3) ==> because after 3 variants of equations
+    # STEP = 0 and start from the beginning (linear equation) till regression become adequate
+
     m = val
 
     # num_x = 4  # number of columns with x values x1 -> x3^2 + 1 for zero column
